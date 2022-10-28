@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,8 +27,9 @@ public class Customer {
     @SequenceGenerator(name = "customer_id_generator", sequenceName = "customer_id_generator")
     private Long id;
 
+    @Type(type="uuid-char")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(nullable = false, unique = true, length = 36)
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDHexGenerator")
     private UUID uuid;
 
     @NotNull

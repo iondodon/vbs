@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -22,8 +23,9 @@ public class Booking {
     @SequenceGenerator(name = "booking_id_generator", sequenceName = "booking_id_generator")
     private Long id;
 
+    @Type(type="uuid-char")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(nullable = false, unique = true, length = 36)
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDHexGenerator")
     private UUID uuid;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -32,8 +34,7 @@ public class Booking {
         joinColumns = @JoinColumn(name = "booking_id", nullable = false),
         inverseJoinColumns = @JoinColumn(name = "reservation_date_id", nullable = false)
     )
-    @OrderBy("date")
-    private SortedSet<ReservationDate> reservedDates = new TreeSet<>();
+    private Set<ReservationDate> reservedDates = new HashSet<>();
 
 
     @Override

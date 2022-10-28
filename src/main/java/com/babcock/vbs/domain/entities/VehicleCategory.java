@@ -18,7 +18,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Getter
 @ToString
 @Entity
-@Table(name = "category")
+@Table(name = "vehicle_category")
 public class VehicleCategory {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "category_id_generator")
@@ -32,7 +32,7 @@ public class VehicleCategory {
 
     @NotNull
     @DecimalMin(value = "0", inclusive = false)
-    @Column(nullable = false, precision = 2, scale = 2) // TODO: check precision and scale
+    @Column(nullable = false, precision = 7, scale = 2) // TODO: check precision and scale
     private BigDecimal pricePerDay;
 
     @Override
