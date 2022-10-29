@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Slf4j
 @Component
@@ -28,7 +27,7 @@ public class HttpRequestsInterceptor implements HandlerInterceptor {
         HttpServletResponse response,
         Object handler,
         ModelAndView modelAndView
-    ) throws IOException {
+    ) {
         log.info("Response status {}", response.getStatus());
     }
 }
