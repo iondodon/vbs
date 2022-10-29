@@ -2,14 +2,12 @@ package com.babcock.vbs.domain.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,7 +16,6 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "customer")
 public class Customer {

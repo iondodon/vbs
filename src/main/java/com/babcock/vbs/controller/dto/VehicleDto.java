@@ -26,7 +26,7 @@ public class VehicleDto {
                 .make(vehicle.getMake())
                 .model(vehicle.getModel())
                 .fuelType(vehicle.getFuelType())
-                .vehicleCategory(VehicleCategoryDto.from(vehicle.getVehicleCategory()))
+                .vehicleCategory(VehicleCategoryDto.from(vehicle.getCategory()))
                 .build();
     }
 }

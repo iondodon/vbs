@@ -3,12 +3,11 @@ package com.babcock.vbs.domain.entities;
 import com.babcock.vbs.domain.entities.enumerations.VehicleType;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -16,7 +15,6 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "vehicle_category")
 public class VehicleCategory {
@@ -31,8 +29,8 @@ public class VehicleCategory {
     private VehicleType category;
 
     @NotNull
-    @DecimalMin(value = "0", inclusive = false)
-    @Column(nullable = false, precision = 7, scale = 2) // TODO: check precision and scale
+    @Positive
+    @Column(nullable = false, precision = 7, scale = 2)
     private BigDecimal pricePerDay;
 
     @Override

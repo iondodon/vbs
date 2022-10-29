@@ -3,7 +3,6 @@ package com.babcock.vbs.domain.entities;
 import com.babcock.vbs.domain.entities.enumerations.FuelType;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -11,8 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.babcock.vbs.business.constants.RegularExpressions.REGISTRATION_NUMBER_REG_EXP;
@@ -20,7 +19,6 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "vehicle")
 public class Vehicle {
@@ -57,7 +55,10 @@ public class Vehicle {
     @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "vehicle_category_id", referencedColumnName = "id", nullable = false)
-    private VehicleCategory vehicleCategory;
+    private VehicleCategory category;
+
+    @OneToMany(mappedBy = "vehicle")
+    private Set<Booking> bookings;
 
     @Override
     public boolean equals(Object o) {

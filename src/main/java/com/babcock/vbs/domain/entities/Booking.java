@@ -2,19 +2,19 @@ package com.babcock.vbs.domain.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "booking")
 public class Booking {
@@ -30,12 +30,15 @@ public class Booking {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-        name = "bookings_reservation_dates",
+        name = "bookings_bookingdates",
         joinColumns = @JoinColumn(name = "booking_id", nullable = false),
-        inverseJoinColumns = @JoinColumn(name = "reservation_date_id", nullable = false)
+        inverseJoinColumns = @JoinColumn(name = "bookingdate_id", nullable = false)
     )
-    private Set<ReservationDate> reservedDates = new HashSet<>();
+    private Set<BookingDate> bookedDates = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    private Vehicle vehicle;
 
     @Override
     public boolean equals(Object o) {

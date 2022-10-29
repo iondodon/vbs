@@ -2,7 +2,6 @@ package com.babcock.vbs.domain.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,21 +12,20 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Setter
 @Getter
-@ToString
 @Entity
-@Table(name = "reservation_date")
-public class ReservationDate {
+@Table(name = "bookingdate")
+public class BookingDate {
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "reservation_date_id_generator")
+    @GeneratedValue(strategy = SEQUENCE, generator = "bookingdate_id_generator")
     @SequenceGenerator(
-            name = "reservation_date_id_generator",
-            sequenceName = "reservation_date_id_generator"
+        name = "bookingdate_id_generator",
+        sequenceName = "bookingdate_id_generator"
     )
     private Long id;
 
     @NotNull
     @Column(unique = true, nullable = false)
-    private LocalDate date;
+    private LocalDate bdate;
 
     @Override
     public boolean equals(Object o) {
@@ -35,11 +33,11 @@ public class ReservationDate {
             return true;
         }
         if (o == null || getClass() != o.getClass() ||
-                id == null || ((ReservationDate) o).getId() == null) {
+                id == null || ((BookingDate) o).getId() == null) {
             return false;
         }
-        ReservationDate reservationDate = (ReservationDate) o;
-        return id.equals(reservationDate.id);
+        BookingDate bookingDate = (BookingDate) o;
+        return id.equals(bookingDate.id);
     }
 
     @Override
