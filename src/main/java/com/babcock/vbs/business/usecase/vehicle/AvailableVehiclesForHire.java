@@ -5,11 +5,13 @@ import com.babcock.vbs.business.UseCase;
 import com.babcock.vbs.domain.entities.Vehicle;
 import com.babcock.vbs.integration.database.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @UseCase
 @RequiredArgsConstructor
 public class AvailableVehiclesForHire {
@@ -17,6 +19,7 @@ public class AvailableVehiclesForHire {
 
     @Transactional(readOnly = true)
     public List<Vehicle> getByDate(LocalDate date) {
+        log.info("Get all available vehicle on date {}", date);
         return vehicleRepository.getAvailableForHireOnDate(date);
     }
 }
