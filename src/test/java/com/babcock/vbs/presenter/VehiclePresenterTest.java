@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,7 +35,7 @@ class VehiclePresenterTest {
     void testReturnsCorrectVehicles() {
         Vehicle vehicle = new Vehicle();
         vehicle.setUuid(randomUUID());
-        List<Vehicle> vehicles = List.of(vehicle);
+        List<Vehicle> vehicles = singletonList(vehicle);
         when(getAllVehicles.exec()).thenReturn(vehicles);
 
         AllVehiclesResponse allVehicles = vehiclePresenter.getAllVehicles();
@@ -49,7 +50,7 @@ class VehiclePresenterTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setUuid(UUID.randomUUID());
 
-        when(availableVehiclesForHire.getByDate(any())).thenReturn(List.of(vehicle));
+        when(availableVehiclesForHire.getByDate(any())).thenReturn(singletonList(vehicle));
 
         AvailableForHireResponse availableVehicles = vehiclePresenter
                 .getAvailableForHireByDate(currentDate);

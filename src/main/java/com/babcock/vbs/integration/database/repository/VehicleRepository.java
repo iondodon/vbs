@@ -10,13 +10,13 @@ import java.util.List;
 
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
-    @Query("""
-        select v
-        from Vehicle v
-            left join fetch v.bookings b
-            left join fetch b.bookedDates bd
-        where bd.bdate <> :bdate
-    """)
+    @Query(
+        "select v \n" +
+        "from Vehicle v \n" +
+            "left join fetch v.bookings b \n" +
+            "left join fetch b.bookedDates bd \n" +
+        "where bd.bdate <> :bdate"
+    )
     @EntityGraph(
         type = EntityGraph.EntityGraphType.LOAD,
         attributePaths = "category"

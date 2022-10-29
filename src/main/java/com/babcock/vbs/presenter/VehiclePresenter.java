@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Presenter
 @RequiredArgsConstructor
 public class VehiclePresenter {
@@ -20,7 +22,7 @@ public class VehiclePresenter {
         List<VehicleDto> vehicleDtos = getAllVehicles.exec()
                 .stream()
                 .map(VehicleDto::from)
-                .toList();
+                .collect(toList());
         return new AllVehiclesResponse(vehicleDtos);
     }
 
@@ -28,7 +30,7 @@ public class VehiclePresenter {
         List<VehicleDto> availableVehicles = availableVehiclesForHire.getByDate(date)
                 .stream()
                 .map(VehicleDto::from)
-                .toList();
+                .collect(toList());
         return new AvailableForHireResponse(availableVehicles);
     }
 }

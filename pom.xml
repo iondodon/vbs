@@ -14,7 +14,7 @@
 	<name>vbs</name>
 	<description>Vehicle booking service</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>1.8</java.version>
 		<openapi.version>1.6.12</openapi.version>
 	</properties>
 	<dependencies>

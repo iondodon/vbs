@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -27,7 +28,7 @@ class GetAllVehiclesTest {
     void testReturnsCorrectVehicle() {
         Vehicle vehicle = new Vehicle();
         vehicle.setUuid(randomUUID());
-        when(vehicleRepository.findAll()).thenReturn(List.of(vehicle));
+        when(vehicleRepository.findAll()).thenReturn(singletonList(vehicle));
 
         List<Vehicle> allVehicles = getAllVehicles.exec();
 
