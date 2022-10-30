@@ -1,7 +1,7 @@
 package com.babcock.vbs.business.usecase;
 
 import com.babcock.vbs.business.usecase.vehicle.GetAllVehicles;
-import com.babcock.vbs.domain.entities.Vehicle;
+import com.babcock.vbs.domain.entity.Vehicle;
 import com.babcock.vbs.integration.database.repository.VehicleRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

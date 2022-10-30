@@ -1,6 +1,6 @@
-package com.babcock.vbs.domain.entities;
+package com.babcock.vbs.domain.entity;
 
-import com.babcock.vbs.domain.entities.enumerations.FuelType;
+import com.babcock.vbs.domain.type.FuelType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;

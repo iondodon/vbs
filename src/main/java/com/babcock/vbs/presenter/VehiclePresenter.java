@@ -2,7 +2,7 @@ package com.babcock.vbs.presenter;
 
 import com.babcock.vbs.business.usecase.vehicle.AvailableVehiclesForHire;
 import com.babcock.vbs.business.usecase.vehicle.GetAllVehicles;
-import com.babcock.vbs.controller.dto.VehicleDto;
+import com.babcock.vbs.dto.VehicleDto;
 import com.babcock.vbs.controller.response.AllVehiclesResponse;
 import com.babcock.vbs.controller.response.AvailableForHireResponse;
 import lombok.RequiredArgsConstructor;

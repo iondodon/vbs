@@ -1,6 +1,6 @@
 package com.babcock.vbs.integration.database.repository;
 
-import com.babcock.vbs.domain.entities.Vehicle;
+import com.babcock.vbs.domain.entity.Vehicle;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

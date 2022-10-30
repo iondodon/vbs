@@ -1,7 +1,7 @@
 package com.babcock.vbs.business.usecase.vehicle;
 
 import com.babcock.vbs.business.UseCase;
-import com.babcock.vbs.domain.entities.Vehicle;
+import com.babcock.vbs.domain.entity.Vehicle;
 import com.babcock.vbs.integration.database.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

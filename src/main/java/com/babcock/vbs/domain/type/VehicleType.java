@@ -1,4 +1,4 @@
-package com.babcock.vbs.domain.entities.enumerations;
+package com.babcock.vbs.domain.type;
 
 public enum VehicleType {
     SMALL_CAR,

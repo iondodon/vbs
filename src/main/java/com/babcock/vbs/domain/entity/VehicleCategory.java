@@ -1,6 +1,6 @@
-package com.babcock.vbs.domain.entities;
+package com.babcock.vbs.domain.entity;
 
-import com.babcock.vbs.domain.entities.enumerations.VehicleType;
+import com.babcock.vbs.domain.type.VehicleType;
 import lombok.Getter;
 import lombok.Setter;
 

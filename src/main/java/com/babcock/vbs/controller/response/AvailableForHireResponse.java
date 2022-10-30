@@ -1,6 +1,6 @@
 package com.babcock.vbs.controller.response;
 
-import com.babcock.vbs.controller.dto.VehicleDto;
+import com.babcock.vbs.dto.VehicleDto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

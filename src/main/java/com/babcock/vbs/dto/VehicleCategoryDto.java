@@ -1,7 +1,7 @@
-package com.babcock.vbs.controller.dto;
+package com.babcock.vbs.dto;
 
-import com.babcock.vbs.domain.entities.VehicleCategory;
-import com.babcock.vbs.domain.entities.enumerations.VehicleType;
+import com.babcock.vbs.domain.entity.VehicleCategory;
+import com.babcock.vbs.domain.type.VehicleType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,8 +18,8 @@ public class VehicleCategoryDto {
             return null;
         }
         return VehicleCategoryDto.builder()
-                .category(category.getCategory())
-                .pricePerDay(category.getPricePerDay())
-                .build();
+            .category(category.getCategory())
+            .pricePerDay(category.getPricePerDay())
+            .build();
     }
 }

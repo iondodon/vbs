@@ -1,4 +1,4 @@
-package com.babcock.vbs.domain.entities;
+package com.babcock.vbs.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
