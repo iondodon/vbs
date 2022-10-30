@@ -2,9 +2,11 @@ package com.babcock.vbs.presenter;
 
 import com.babcock.vbs.business.usecase.vehicle.AvailableVehiclesForHire;
 import com.babcock.vbs.business.usecase.vehicle.GetAllVehicles;
+import com.babcock.vbs.business.usecase.vehicle.GetCostOfHiring;
 import com.babcock.vbs.controller.response.AllVehiclesResponse;
 import com.babcock.vbs.controller.response.AvailableForHireResponse;
 import com.babcock.vbs.domain.entity.Vehicle;
+import com.babcock.vbs.exception.VbsException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,8 +20,9 @@ import java.util.UUID;
 import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +31,8 @@ class VehiclePresenterTest {
     private GetAllVehicles getAllVehicles;
     @Mock
     private AvailableVehiclesForHire availableVehiclesForHire;
+    @Mock
+    private GetCostOfHiring getCostOfHiring;
     @InjectMocks
     private VehiclePresenter vehiclePresenter;
 
@@ -41,7 +46,8 @@ class VehiclePresenterTest {
         AllVehiclesResponse allVehicles = vehiclePresenter.getAllVehicles();
 
         assertThat(allVehicles.getVehicles()).hasSize(1);
-        assertThat(allVehicles.getVehicles().get(0).getUuid()).isEqualTo(vehicle.getUuid());
+        assertThat(allVehicles.getVehicles().get(0).getUuid())
+                .isEqualTo(vehicle.getUuid());
     }
 
     @Test
@@ -50,12 +56,36 @@ class VehiclePresenterTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setUuid(UUID.randomUUID());
 
-        when(availableVehiclesForHire.getByDate(any())).thenReturn(singletonList(vehicle));
+        when(availableVehiclesForHire.getByDate(any()))
+                .thenReturn(singletonList(vehicle));
 
         AvailableForHireResponse availableVehicles = vehiclePresenter
                 .getAvailableForHireByDate(currentDate);
 
         assertThat(availableVehicles.getVehicles()).hasSize(1);
-        assertThat(availableVehicles.getVehicles().get(0).getUuid()).isEqualTo(vehicle.getUuid());
+        assertThat(availableVehicles.getVehicles().get(0).getUuid())
+                .isEqualTo(vehicle.getUuid());
+    }
+
+    @Test
+    void testGetCostOfHiringThrows_whenInvalidPeriod() {
+        LocalDate from = LocalDate.now().plusDays(1);
+        LocalDate to = LocalDate.now();
+
+        assertThatExceptionOfType(VbsException.class)
+                .isThrownBy(() -> vehiclePresenter.getCostByPeriod(randomUUID(), from, to))
+                .withMessage("Invalid period");
+    }
+
+    @Test
+    void testWasMultipliedToTheNumberOfDays() {
+        UUID vehicleUuid = randomUUID();
+        LocalDate from = LocalDate.now().minusDays(1);
+        LocalDate to = LocalDate.now();
+
+        vehiclePresenter.getCostByPeriod(vehicleUuid, from, to);
+
+        verify(getCostOfHiring, times(1))
+                .byPeriod(eq(vehicleUuid), any());
     }
 }
