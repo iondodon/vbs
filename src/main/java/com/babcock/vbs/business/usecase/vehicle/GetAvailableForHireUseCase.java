@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @UseCase
 @RequiredArgsConstructor
-public class AvailableVehiclesForHire {
+public class GetAvailableForHireUseCase {
     private final VehicleRepository vehicleRepository;
 
     @Transactional(readOnly = true)

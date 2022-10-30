@@ -19,7 +19,8 @@ public class BookingDate {
     @GeneratedValue(strategy = SEQUENCE, generator = "bookingdate_id_generator")
     @SequenceGenerator(
         name = "bookingdate_id_generator",
-        sequenceName = "bookingdate_id_generator"
+        sequenceName = "bookingdate_id_generator",
+        initialValue = 100
     )
     private Long id;
 

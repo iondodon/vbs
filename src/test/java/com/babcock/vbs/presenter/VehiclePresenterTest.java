@@ -1,8 +1,8 @@
 package com.babcock.vbs.presenter;
 
-import com.babcock.vbs.business.usecase.vehicle.AvailableVehiclesForHire;
-import com.babcock.vbs.business.usecase.vehicle.GetAllVehicles;
-import com.babcock.vbs.business.usecase.vehicle.GetCostOfHiring;
+import com.babcock.vbs.business.usecase.vehicle.GetAvailableForHireUseCase;
+import com.babcock.vbs.business.usecase.vehicle.GetAllVehiclesUseCase;
+import com.babcock.vbs.business.usecase.vehicle.GetCostOfHiringUseCase;
 import com.babcock.vbs.controller.response.AllVehiclesResponse;
 import com.babcock.vbs.controller.response.AvailableForHireResponse;
 import com.babcock.vbs.domain.entity.Vehicle;
@@ -28,11 +28,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class VehiclePresenterTest {
     @Mock
-    private GetAllVehicles getAllVehicles;
+    private GetAllVehiclesUseCase getAllVehiclesUseCase;
     @Mock
-    private AvailableVehiclesForHire availableVehiclesForHire;
+    private GetAvailableForHireUseCase getAvailableForHireUseCase;
     @Mock
-    private GetCostOfHiring getCostOfHiring;
+    private GetCostOfHiringUseCase getCostOfHiringUseCase;
     @InjectMocks
     private VehiclePresenter vehiclePresenter;
 
@@ -41,7 +41,7 @@ class VehiclePresenterTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setUuid(randomUUID());
         List<Vehicle> vehicles = singletonList(vehicle);
-        when(getAllVehicles.exec()).thenReturn(vehicles);
+        when(getAllVehiclesUseCase.exec()).thenReturn(vehicles);
 
         AllVehiclesResponse allVehicles = vehiclePresenter.getAllVehicles();
 
@@ -56,7 +56,7 @@ class VehiclePresenterTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setUuid(UUID.randomUUID());
 
-        when(availableVehiclesForHire.getByDate(any()))
+        when(getAvailableForHireUseCase.getByDate(any()))
                 .thenReturn(singletonList(vehicle));
 
         AvailableForHireResponse availableVehicles = vehiclePresenter
@@ -85,7 +85,7 @@ class VehiclePresenterTest {
 
         vehiclePresenter.getCostByPeriod(vehicleUuid, from, to);
 
-        verify(getCostOfHiring, times(1))
+        verify(getCostOfHiringUseCase, times(1))
                 .byPeriod(eq(vehicleUuid), any());
     }
 }

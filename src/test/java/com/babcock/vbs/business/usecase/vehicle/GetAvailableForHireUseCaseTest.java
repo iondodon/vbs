@@ -18,11 +18,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AvailableVehiclesForHireTest {
+class GetAvailableForHireUseCaseTest {
     @Mock
     private VehicleRepository vehicleRepository;
     @InjectMocks
-    private AvailableVehiclesForHire availableVehiclesForHire;
+    private GetAvailableForHireUseCase getAvailableForHireUseCase;
 
     @Test
     void testGetByDateReturnCorrectVehicles() {
@@ -33,7 +33,7 @@ class AvailableVehiclesForHireTest {
         when(vehicleRepository.getAvailableForHireOnDate(currentDate))
                 .thenReturn(singletonList(vehicle));
 
-        List<Vehicle> availableVehicles = availableVehiclesForHire.getByDate(currentDate);
+        List<Vehicle> availableVehicles = getAvailableForHireUseCase.getByDate(currentDate);
 
         assertThat(availableVehicles).hasSize(1);
         assertThat(availableVehicles.get(0).getUuid()).isEqualTo(vehicle.getUuid());
@@ -48,7 +48,7 @@ class AvailableVehiclesForHireTest {
         when(vehicleRepository.getAvailableForHireOnDate(any()))
                 .thenReturn(singletonList(vehicle));
 
-        List<Vehicle> availableVehicles = availableVehiclesForHire.getByDate(date);
+        List<Vehicle> availableVehicles = getAvailableForHireUseCase.getByDate(date);
         assertThat(availableVehicles).hasSize(1);
         assertThat(availableVehicles.get(0).getUuid()).isEqualTo(vehicle.getUuid());
     }

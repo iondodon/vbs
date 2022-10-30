@@ -1,6 +1,6 @@
 package com.babcock.vbs.business.usecase;
 
-import com.babcock.vbs.business.usecase.vehicle.GetAllVehicles;
+import com.babcock.vbs.business.usecase.vehicle.GetAllVehiclesUseCase;
 import com.babcock.vbs.domain.entity.Vehicle;
 import com.babcock.vbs.integration.database.repository.VehicleRepository;
 import org.junit.jupiter.api.Test;
@@ -18,11 +18,11 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class GetAllVehiclesTest {
+class GetAllVehiclesUseCaseTest {
     @Mock
     private VehicleRepository vehicleRepository;
     @InjectMocks
-    private GetAllVehicles getAllVehicles;
+    private GetAllVehiclesUseCase getAllVehiclesUseCase;
 
     @Test
     void testReturnsCorrectVehicle() {
@@ -30,7 +30,7 @@ class GetAllVehiclesTest {
         vehicle.setUuid(randomUUID());
         when(vehicleRepository.findAll()).thenReturn(singletonList(vehicle));
 
-        List<Vehicle> allVehicles = getAllVehicles.exec();
+        List<Vehicle> allVehicles = getAllVehiclesUseCase.exec();
 
         assertThat(allVehicles).hasSize(1);
         assertThat(allVehicles.get(0).getUuid()).isEqualTo(vehicle.getUuid());

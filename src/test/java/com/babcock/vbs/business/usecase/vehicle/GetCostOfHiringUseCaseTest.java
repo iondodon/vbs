@@ -22,18 +22,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class GetCostOfHiringTest {
+class GetCostOfHiringUseCaseTest {
     @Mock
     private VehicleRepository vehicleRepository;
     @InjectMocks
-    private GetCostOfHiring getCostOfHiring;
+    private GetCostOfHiringUseCase getCostOfHiringUseCase;
 
     @Test
     void testThrowsResourceNotFoundException() {
         when(vehicleRepository.findByUuid(any())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(ResourceNotFoundException.class)
-                .isThrownBy(() -> getCostOfHiring.byPeriod(randomUUID(), Period.ofDays(1)))
+                .isThrownBy(() -> getCostOfHiringUseCase.byPeriod(randomUUID(), Period.ofDays(1)))
                 .withMessage("Vehicle not found");
     }
 
@@ -50,7 +50,7 @@ class GetCostOfHiringTest {
         when(vehicleRepository.findByUuid(any()))
                 .thenReturn(Optional.of(vehicle));
 
-        BigDecimal cost = getCostOfHiring
+        BigDecimal cost = getCostOfHiringUseCase
                 .byPeriod(vehicle.getUuid(), Period.ofDays(2));
 
         assertThat(cost).isEqualTo(BigDecimal.valueOf(20));

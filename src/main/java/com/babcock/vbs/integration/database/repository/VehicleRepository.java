@@ -1,11 +1,11 @@
 package com.babcock.vbs.integration.database.repository;
 
+import com.babcock.vbs.domain.entity.BookingDate;
 import com.babcock.vbs.domain.entity.Vehicle;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +28,23 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     @Override
     @EntityGraph(
-        type = EntityGraph.EntityGraphType.LOAD,
-        attributePaths = "category"
+            type = EntityGraph.EntityGraphType.LOAD,
+            attributePaths = "category"
     )
     List<Vehicle> findAll();
 
+    @EntityGraph(
+        type = EntityGraph.EntityGraphType.LOAD,
+        attributePaths = "category"
+    )
     Optional<Vehicle> findByUuid(UUID uuid);
+
+    @Query(
+        "select bd \n" +
+        "from Vehicle v \n" +
+            "join v.bookings b \n" +
+            "join b.bookedDates bd \n" +
+        "where v.uuid=:vehicleUuid and bd.bdate>=:from and bd.bdate<=:to"
+    )
+    List<BookingDate> findBookedDatesForVehicleByPeriod(UUID vehicleUuid, LocalDate from, LocalDate to);
 }

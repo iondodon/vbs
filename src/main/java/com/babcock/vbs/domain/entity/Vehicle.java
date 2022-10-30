@@ -3,7 +3,6 @@ package com.babcock.vbs.domain.entity;
 import com.babcock.vbs.domain.type.FuelType;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -24,11 +23,14 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "vehicle_id_generator")
-    @SequenceGenerator(name = "vehicle_id_generator", sequenceName = "vehicle_id_generator")
+    @SequenceGenerator(
+        name = "vehicle_id_generator",
+        sequenceName = "vehicle_id_generator",
+        initialValue = 100
+    )
     private Long id;
 
     @Type(type="uuid-char")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(nullable = false, unique = true, length = 36)
     private UUID uuid;
 

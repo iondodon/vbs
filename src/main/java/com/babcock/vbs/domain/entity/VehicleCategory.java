@@ -19,7 +19,11 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class VehicleCategory {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "category_id_generator")
-    @SequenceGenerator(name = "category_id_generator", sequenceName = "category_id_generator")
+    @SequenceGenerator(
+        name = "category_id_generator",
+        sequenceName = "category_id_generator",
+        initialValue = 100
+    )
     private Long id;
 
     @NotNull

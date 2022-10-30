@@ -1,23 +1,24 @@
 package com.babcock.vbs.business.usecase.vehicle;
 
 import com.babcock.vbs.business.UseCase;
-import com.babcock.vbs.domain.entity.Vehicle;
+import com.babcock.vbs.dto.DatePeriodDto;
 import com.babcock.vbs.integration.database.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @UseCase
 @RequiredArgsConstructor
-public class GetAllVehicles {
+public class IsAvailableForHireUseCase {
     private final VehicleRepository vehicleRepository;
 
     @Transactional(readOnly = true)
-    public List<Vehicle> exec() {
-        log.info("Get all vehicles");
-        return vehicleRepository.findAll();
+    public boolean forPeriod(UUID vehicleUuid, DatePeriodDto period) {
+        return vehicleRepository
+            .findBookedDatesForVehicleByPeriod(vehicleUuid, period.getFrom(), period.getTo())
+            .isEmpty();
     }
 }

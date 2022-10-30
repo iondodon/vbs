@@ -1,8 +1,8 @@
 package com.babcock.vbs.presenter;
 
-import com.babcock.vbs.business.usecase.vehicle.AvailableVehiclesForHire;
-import com.babcock.vbs.business.usecase.vehicle.GetAllVehicles;
-import com.babcock.vbs.business.usecase.vehicle.GetCostOfHiring;
+import com.babcock.vbs.business.usecase.vehicle.GetAvailableForHireUseCase;
+import com.babcock.vbs.business.usecase.vehicle.GetAllVehiclesUseCase;
+import com.babcock.vbs.business.usecase.vehicle.GetCostOfHiringUseCase;
 import com.babcock.vbs.controller.response.AllVehiclesResponse;
 import com.babcock.vbs.controller.response.AvailableForHireResponse;
 import com.babcock.vbs.controller.response.CostResponse;
@@ -22,12 +22,12 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class VehiclePresenter {
     private static final String INVALID_PERIOD = "Invalid period";
-    private final GetAllVehicles getAllVehicles;
-    private final AvailableVehiclesForHire availableVehiclesForHire;
-    private final GetCostOfHiring getCostOfHiring;
+    private final GetAllVehiclesUseCase getAllVehiclesUseCase;
+    private final GetAvailableForHireUseCase getAvailableForHireUseCase;
+    private final GetCostOfHiringUseCase getCostOfHiringUseCase;
 
     public AllVehiclesResponse getAllVehicles() {
-        List<VehicleDto> vehicleDtos = getAllVehicles.exec()
+        List<VehicleDto> vehicleDtos = getAllVehiclesUseCase.exec()
                 .stream()
                 .map(VehicleDto::from)
                 .collect(toList());
@@ -35,7 +35,7 @@ public class VehiclePresenter {
     }
 
     public AvailableForHireResponse getAvailableForHireByDate(LocalDate date) {
-        List<VehicleDto> availableVehicles = availableVehiclesForHire.getByDate(date)
+        List<VehicleDto> availableVehicles = getAvailableForHireUseCase.getByDate(date)
                 .stream()
                 .map(VehicleDto::from)
                 .collect(toList());
@@ -47,7 +47,7 @@ public class VehiclePresenter {
             throw new VbsException(INVALID_PERIOD);
         }
         Period periodInclusive = Period.between(from, to.plusDays(1));
-        BigDecimal cost = getCostOfHiring.byPeriod(vehicleUuid, periodInclusive);
+        BigDecimal cost = getCostOfHiringUseCase.byPeriod(vehicleUuid, periodInclusive);
         return new CostResponse(cost);
     }
 }

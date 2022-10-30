@@ -1,11 +1,11 @@
 package com.babcock.vbs.domain.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,14 +17,20 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Getter
 @Entity
 @Table(name = "booking")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "booking_id_generator")
-    @SequenceGenerator(name = "booking_id_generator", sequenceName = "booking_id_generator")
+    @SequenceGenerator(
+            name = "booking_id_generator",
+            sequenceName = "booking_id_generator",
+            initialValue = 100
+    )
     private Long id;
 
     @Type(type="uuid-char")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(nullable = false, unique = true, length = 36)
     private UUID uuid;
 
@@ -39,6 +45,11 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     private Vehicle vehicle;
+
+    @NotNull
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
 
     @Override
     public boolean equals(Object o) {
