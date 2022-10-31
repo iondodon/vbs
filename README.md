@@ -19,7 +19,7 @@ between them.
 3. build ```mvn clean package spring-boot:repackage```
 4. run ```java -jar target/vbs-0.0.1-SNAPSHOT.jar```
 
-While the application is running it is possible to access [http://localhost:8080/h2-console](H2-Console)
+While the application is running it is possible to access [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
 and take a look in the database. In the database should be already persisted
 3 vehicles, 1 customer, 3 vehicle categories, 2 bookings and 2 booking dates.
 
@@ -33,6 +33,6 @@ Driver Class: org.h2.Driver
 
 ### OpenAPI definition
 
-The endpoints are listed on [http://localhost:8080/swagger-ui/index.html](Swagger). 
+The endpoints are listed on [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html). 
 You can use Swagger to test the endpoints.
 
