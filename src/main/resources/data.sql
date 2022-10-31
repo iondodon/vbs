@@ -1,6 +1,8 @@
 INSERT INTO vehicle_category(id, category, price_per_day)
 VALUES
-(1, 'SMALL_CAR', 1.01);
+(1, 'SMALL_CAR',  25.0),
+(2, 'ESTATE_CAR', 35.0),
+(3, 'VAN',        50.0);
 
 INSERT INTO bookingdate(id, bdate)
 VALUES

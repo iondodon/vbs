@@ -18,7 +18,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
         "from Vehicle v \n" +
             "left join fetch v.bookings b \n" +
             "left join fetch b.bookedDates bd \n" +
-        "where bd.bdate <> :bdate"
+        "where bd.bdate is null or bd.bdate<>:bdate"
     )
     @EntityGraph(
         type = EntityGraph.EntityGraphType.LOAD,
