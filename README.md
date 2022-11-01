@@ -21,7 +21,9 @@ between them.
 
 While the application is running it is possible to access [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
 and take a look in the database. In the database should be already persisted
-3 vehicles, 1 customer, 3 vehicle categories, 2 bookings and 2 booking dates.
+3 vehicles, 1 customer, 3 vehicle categories, 2 bookings and 2 booking dates. 
+Vehicle registration number should respect the following regular expression ```^[A-Z]{3} [0-9]{3}$```. 
+Examples of valid registration numbers are ```ABC 123``` and ```VFG 535```. 
 
 #### H2 database credentials
 
