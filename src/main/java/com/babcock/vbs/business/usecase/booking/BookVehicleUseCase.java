@@ -28,10 +28,10 @@ import static java.util.UUID.randomUUID;
 @UseCase
 @RequiredArgsConstructor
 public class BookVehicleUseCase {
-    private static final String VEHICLE_NOT_FOUND = "Vehicle not found";
+    private static final String VEHICLE_NOT_FOUND = "Vehicle with UUID %s not found";
     private static final String ALREADY_HIRED =
-            "Vehicle %s is already taken for at leas one day of this period";
-    private static final String CUSTOMER_NOT_FOUND = "Customer %s not found";
+            "Vehicle with UUID %s is already taken for at leas one day of this period";
+    private static final String CUSTOMER_NOT_FOUND = "Customer with UUID %s not found";
 
     private final VehicleRepository vehicleRepository;
     private final IsAvailableForHireUseCase isAvailableForHire;
@@ -41,23 +41,23 @@ public class BookVehicleUseCase {
 
 
     @Transactional
-    public void forPeriod(UUID customerUuid, UUID vehicleUuid, DatePeriodDto period) {
-        LocalDate startDate = period.getFrom();
-        LocalDate endDate = period.getTo();
-        log.info("Booking vehicle {} starting from {} to {}", vehicleUuid, startDate, endDate);
+    public void execForPeriod(UUID customerUuid, UUID vehicleUuid, DatePeriodDto period) {
+        LocalDate startDate = period.getFromDate();
+        LocalDate endDate = period.getToDate();
+        log.info("Booking vehicle with UUID {} starting from {} to {}", vehicleUuid, startDate, endDate);
 
         Vehicle vehicle = vehicleRepository.findByUuid(vehicleUuid)
-                .orElseThrow(() -> new ResourceNotFoundException(VEHICLE_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(format(VEHICLE_NOT_FOUND, vehicleUuid)));
         Customer customer = customerRepository.findByUuid(customerUuid)
                 .orElseThrow(() -> new ResourceNotFoundException(format(CUSTOMER_NOT_FOUND, customerUuid)));
 
-        if (!isAvailableForHire.forPeriod(vehicleUuid, period)) {
+        if (!isAvailableForHire.checkForPeriod(vehicleUuid, period)) {
             throw new AlreadyHiredException(format(ALREADY_HIRED, vehicleUuid));
         }
 
-        log.info("Booking vehicle {}", vehicleUuid);
+        log.info("Booking vehicle with UUID {}", vehicleUuid);
 
-        Set<BookingDate> datesToBook = getBookingDates.forPeriod(startDate, endDate);
+        Set<BookingDate> datesToBook = getBookingDates.getForPeriod(startDate, endDate);
         Booking newBooking = Booking.builder()
                 .uuid(randomUUID())
                 .vehicle(vehicle)

@@ -16,9 +16,9 @@ public class IsAvailableForHireUseCase {
     private final VehicleRepository vehicleRepository;
 
     @Transactional(readOnly = true)
-    public boolean forPeriod(UUID vehicleUuid, DatePeriodDto period) {
+    public boolean checkForPeriod(UUID vehicleUuid, DatePeriodDto period) {
         return vehicleRepository
-            .findBookedDatesForVehicleByPeriod(vehicleUuid, period.getFrom(), period.getTo())
+            .findBookedDatesForVehicleByPeriod(vehicleUuid, period.getFromDate(), period.getToDate())
             .isEmpty();
     }
 }

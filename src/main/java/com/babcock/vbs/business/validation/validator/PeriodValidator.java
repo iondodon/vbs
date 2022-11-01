@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 public class PeriodValidator implements ConstraintValidator<ValidPeriod, DatePeriodDto> {
     @Override
     public boolean isValid(DatePeriodDto period, ConstraintValidatorContext context) {
-        return period.getTo().isEqual(period.getFrom()) ||
-                period.getTo().isAfter(period.getFrom());
+        return period.getToDate().isEqual(period.getFromDate()) ||
+                period.getToDate().isAfter(period.getFromDate());
     }
 }

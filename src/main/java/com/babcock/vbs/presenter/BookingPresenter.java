@@ -10,7 +10,7 @@ public class BookingPresenter {
     private final BookVehicleUseCase bookVehicle;
 
     public void bookVehicle(CreateBookingRequest request) {
-        bookVehicle.forPeriod(request.getCustomerUuid(),
+        bookVehicle.execForPeriod(request.getCustomerUuid(),
                 request.getVehicleUuid(), request.getDatePeriod());
     }
 }

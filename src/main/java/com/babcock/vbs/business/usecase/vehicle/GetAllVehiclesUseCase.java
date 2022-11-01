@@ -17,7 +17,7 @@ public class GetAllVehiclesUseCase {
 
     @Transactional(readOnly = true)
     public List<Vehicle> exec() {
-        log.info("Get all vehicles");
+        log.info("Getting all vehicles");
         return vehicleRepository.findAll();
     }
 }

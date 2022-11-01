@@ -11,13 +11,13 @@ import java.time.LocalDate;
 @Getter
 @RequiredArgsConstructor
 public class DatePeriodDto {
-    @NotNull
-    @BookableDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private final LocalDate from;
+    @BookableDate(message = "Past starting date is not bookable")
+    @NotNull(message = "Starting date is not specified")
+    private final LocalDate fromDate;
 
-    @NotNull
-    @BookableDate
+    @BookableDate(message = "End date in the past is not bookable")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private final LocalDate to;
+    @NotNull(message = "End date is not specified")
+    private final LocalDate toDate;
 }

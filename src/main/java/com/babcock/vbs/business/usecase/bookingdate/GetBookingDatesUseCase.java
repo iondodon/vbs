@@ -19,17 +19,17 @@ public class GetBookingDatesUseCase {
 
 
     @Transactional
-    public Set<BookingDate> forPeriod(LocalDate from, LocalDate to) {
-        log.info("Get booking dates for period {} - {}", from, to);
+    public Set<BookingDate> getForPeriod(LocalDate fromDate, LocalDate toDate) {
+        log.info("Get booking dates for period {} - {}", fromDate, toDate);
         Set<BookingDate> persistedBookingDates = bookingDateRepository
-                .findAllInPeriodInclusive(from, to);
+                .findAllInPeriodInclusive(fromDate, toDate);
 
         Set<LocalDate> persistedDates = persistedBookingDates.stream()
                 .map(BookingDate::getBdate)
                 .collect(Collectors.toSet());
 
-        LocalDate date = from;
-        while (date.isBefore(to) || date.isEqual(to)) {
+        LocalDate date = fromDate;
+        while (date.isBefore(toDate) || date.isEqual(toDate)) {
             if (!persistedDates.contains(date)) {
                 persistNewDate(persistedBookingDates, date);
             }
@@ -39,9 +39,9 @@ public class GetBookingDatesUseCase {
         return persistedBookingDates;
     }
 
-    private void persistNewDate(Set<BookingDate> persistedBookingDates, LocalDate date) {
+    private void persistNewDate(Set<BookingDate> persistedBookingDates, LocalDate newDate) {
         BookingDate newBookingDate = new BookingDate();
-        newBookingDate.setBdate(date);
+        newBookingDate.setBdate(newDate);
         BookingDate persistedBookingDate = bookingDateRepository.save(newBookingDate);
         persistedBookingDates.add(persistedBookingDate);
     }

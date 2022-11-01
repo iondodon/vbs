@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.TYPE})
 @Constraint(validatedBy = PeriodValidator.class)
 public @interface ValidPeriod {
-    String message() default "Invalid period";
+    String message() default "Invalid period. toDate should be greater or equal to fromDate";
 
     Class<?>[] groups() default {};
 

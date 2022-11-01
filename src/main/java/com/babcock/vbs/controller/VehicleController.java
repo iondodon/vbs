@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ public class VehicleController {
     @Operation(summary = "Get available vehicles for hire on a given date")
     public AvailableForHireResponse getAvailableByDate(
             @RequestParam
+            @NotNull(message = "Missing date")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             @BookableDate LocalDate date
     ) {
@@ -42,9 +44,15 @@ public class VehicleController {
     @Operation(summary = "Get cost of hiring a vehicle by date range")
     public CostResponse getCostByPeriod(
             @PathVariable("vehicleUuid") UUID vehicleUuid,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+
+            @NotNull(message = "Missing starting date")
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+
+            @NotNull(message = "Missing end date")
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate
     ) {
-        return vehiclePresenter.getCostByPeriod(vehicleUuid, from, to);
+        return vehiclePresenter.getCostByPeriod(vehicleUuid, fromDate, toDate);
     }
 }

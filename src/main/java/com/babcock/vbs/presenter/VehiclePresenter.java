@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toList;
 @Presenter
 @RequiredArgsConstructor
 public class VehiclePresenter {
-    private static final String INVALID_PERIOD = "Invalid period";
+    private static final String INVALID_PERIOD = "Starting date cannot be after end date";
     private final GetAllVehiclesUseCase getAllVehiclesUseCase;
     private final GetAvailableForHireUseCase getAvailableForHireUseCase;
     private final GetCostOfHiringUseCase getCostOfHiringUseCase;
@@ -42,11 +42,11 @@ public class VehiclePresenter {
         return new AvailableForHireResponse(availableVehicles);
     }
 
-    public CostResponse getCostByPeriod(UUID vehicleUuid, LocalDate from, LocalDate to) {
-        if (from.isAfter(to)) {
+    public CostResponse getCostByPeriod(UUID vehicleUuid, LocalDate fromDate, LocalDate toDate) {
+        if (fromDate.isAfter(toDate)) {
             throw new VbsException(INVALID_PERIOD);
         }
-        Period periodInclusive = Period.between(from, to.plusDays(1));
+        Period periodInclusive = Period.between(fromDate, toDate.plusDays(1));
         BigDecimal cost = getCostOfHiringUseCase.byPeriod(vehicleUuid, periodInclusive);
         return new CostResponse(cost);
     }

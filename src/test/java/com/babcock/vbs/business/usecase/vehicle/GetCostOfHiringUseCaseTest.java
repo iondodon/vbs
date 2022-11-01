@@ -14,7 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.Period;
 import java.util.Optional;
+import java.util.UUID;
 
+import static java.lang.String.format;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -32,9 +34,10 @@ class GetCostOfHiringUseCaseTest {
     void testThrowsResourceNotFoundException() {
         when(vehicleRepository.findByUuid(any())).thenReturn(Optional.empty());
 
+        UUID vehicleUuid = randomUUID();
         assertThatExceptionOfType(ResourceNotFoundException.class)
-                .isThrownBy(() -> getCostOfHiringUseCase.byPeriod(randomUUID(), Period.ofDays(1)))
-                .withMessage("Vehicle not found");
+                .isThrownBy(() -> getCostOfHiringUseCase.byPeriod(vehicleUuid, Period.ofDays(1)))
+                .withMessage(format("Vehicle with UUID %s not found", vehicleUuid));
     }
 
     @Test

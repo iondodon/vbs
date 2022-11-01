@@ -11,18 +11,20 @@ import java.math.BigDecimal;
 import java.time.Period;
 import java.util.UUID;
 
+import static java.lang.String.format;
+
 @Slf4j
 @UseCase
 @RequiredArgsConstructor
 public class GetCostOfHiringUseCase {
-    private static final String VEHICLE_NOT_FOUND = "Vehicle not found";
+    private static final String VEHICLE_NOT_FOUND = "Vehicle with UUID %s not found";
     private final VehicleRepository vehicleRepository;
 
     @Transactional(readOnly = true)
     public BigDecimal byPeriod(UUID vehicleUuid, Period period) {
-        log.info("Get price to hire vehicle {} for period {}", vehicleUuid, period);
+        log.info("Get price to hire vehicle with UUID {} for period {}", vehicleUuid, period);
         return vehicleRepository.findByUuid(vehicleUuid)
-                .orElseThrow(() -> new ResourceNotFoundException(VEHICLE_NOT_FOUND))
+                .orElseThrow(() -> new ResourceNotFoundException(format(VEHICLE_NOT_FOUND, vehicleUuid)))
                 .getCategory()
                 .getPricePerDay()
                 .multiply(new BigDecimal(period.getDays()));

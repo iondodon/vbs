@@ -74,7 +74,7 @@ class VehiclePresenterTest {
 
         assertThatExceptionOfType(VbsException.class)
                 .isThrownBy(() -> vehiclePresenter.getCostByPeriod(randomUUID(), from, to))
-                .withMessage("Invalid period");
+                .withMessage("Starting date cannot be after end date");
     }
 
     @Test
