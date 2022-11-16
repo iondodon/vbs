@@ -1,6 +1,7 @@
 package com.babcock.vbs.domain.entity;
 
 import com.babcock.vbs.domain.type.VehicleType;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class VehicleCategory {
         sequenceName = "category_id_generator",
         initialValue = 100
     )
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @NotNull

@@ -28,6 +28,7 @@ public class Booking {
             sequenceName = "booking_id_generator",
             initialValue = 100
     )
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @Type(type="uuid-char")

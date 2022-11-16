@@ -1,5 +1,6 @@
 package com.babcock.vbs.domain.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class BookingDate {
         sequenceName = "bookingdate_id_generator",
         initialValue = 100
     )
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @NotNull
