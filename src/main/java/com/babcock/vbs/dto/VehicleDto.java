@@ -15,13 +15,10 @@ import java.util.UUID;
 public class VehicleDto {
     @NotNull
     private final UUID uuid;
-    @NotNull
     @NotBlank
     private final String registrationNumber;
-    @NotNull
     @NotBlank
     private final String make;
-    @NotNull
     @NotBlank
     private final String model;
     @NotNull
